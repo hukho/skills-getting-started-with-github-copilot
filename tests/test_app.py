@@ -46,8 +46,11 @@ def test_signup_adds_participant_to_activity(client):
     before_participants = deepcopy(activities[activity_name]["participants"])
 
     # Act
+    from urllib.parse import quote
+
+    encoded_activity_name = quote(activity_name, safe="")
     response = client.post(
-        f"/activities/{activity_name}/signup",
+        f"/activities/{encoded_activity_name}/signup",
         params={"email": email},
     )
 
@@ -63,8 +66,11 @@ def test_signup_rejects_duplicate_participant(client):
     email = activities[activity_name]["participants"][0]
 
     # Act
+    from urllib.parse import quote
+
+    encoded_activity_name = quote(activity_name, safe="")
     response = client.post(
-        f"/activities/{activity_name}/signup",
+        f"/activities/{encoded_activity_name}/signup",
         params={"email": email},
     )
 
@@ -79,8 +85,11 @@ def test_signup_rejects_unknown_activity(client):
     email = "student@mergington.edu"
 
     # Act
+    from urllib.parse import quote
+
+    encoded_activity_name = quote(activity_name, safe="")
     response = client.post(
-        f"/activities/{activity_name}/signup",
+        f"/activities/{encoded_activity_name}/signup",
         params={"email": email},
     )
 
@@ -95,8 +104,11 @@ def test_unregister_removes_participant_from_activity(client):
     email = activities[activity_name]["participants"][0]
 
     # Act
+    from urllib.parse import quote
+
+    encoded_activity_name = quote(activity_name, safe="")
     response = client.delete(
-        f"/activities/{activity_name}/participants",
+        f"/activities/{encoded_activity_name}/participants",
         params={"email": email},
     )
 
@@ -112,8 +124,11 @@ def test_unregister_rejects_unknown_activity(client):
     email = "student@mergington.edu"
 
     # Act
+    from urllib.parse import quote
+
+    encoded_activity_name = quote(activity_name, safe="")
     response = client.delete(
-        f"/activities/{activity_name}/participants",
+        f"/activities/{encoded_activity_name}/participants",
         params={"email": email},
     )
 
@@ -128,8 +143,11 @@ def test_unregister_rejects_missing_participant(client):
     email = "missing.student@mergington.edu"
 
     # Act
+    from urllib.parse import quote
+
+    encoded_activity_name = quote(activity_name, safe="")
     response = client.delete(
-        f"/activities/{activity_name}/participants",
+        f"/activities/{encoded_activity_name}/participants",
         params={"email": email},
     )
 
